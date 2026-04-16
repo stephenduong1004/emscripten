@@ -14,7 +14,7 @@ int __pthread_mutex_unlock(pthread_mutex_t *m)
 		self = __pthread_self();
 		old = m->_m_lock;
 		int own = old & 0x3fffffff;
-		if (own != self->tid)
+		if (own != CURRENT_THREAD_ID)
 			return EPERM;
 		if ((type&3) == PTHREAD_MUTEX_RECURSIVE && m->_m_count)
 			return m->_m_count--, 0;
